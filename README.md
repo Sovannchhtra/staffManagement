@@ -5,7 +5,7 @@
 
 + function:
      - Add
-     - Reade
+     - Read
      - Update
      - Detele
      - Search

@@ -1,3 +1,4 @@
+
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -8,8 +9,8 @@ export class staff extends BaseEntity{
      @Column()
      fullName!:string
 
-     @Column()
-     birthDay!:Date
+     @Column({type:'date'})
+     birthDay!:string
 
      @Column()
      gender!:number

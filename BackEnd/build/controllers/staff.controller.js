@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteStaff = exports.updateStaff = exports.editStaff = exports.createStaff = exports.getStaff = void 0;
+exports.searchStaff = exports.deleteStaff = exports.updateStaff = exports.editStaff = exports.createStaff = exports.getStaff = void 0;
 const staff_entity_1 = require("../entity/staff.entity");
 const getStaff = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -115,3 +115,57 @@ const deleteStaff = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.deleteStaff = deleteStaff;
+const searchStaff = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { search } = req.body;
+        let staffs = yield staff_entity_1.staff.find();
+        if (search) {
+            if (search === 'Male' || search === 'male') {
+                const genderNumber = 1;
+                if (staffs = yield staff_entity_1.staff.find({ where: { gender: genderNumber } })) {
+                    return res.status(200).json({
+                        success: true,
+                        staffs
+                    });
+                }
+            }
+            if (search === 'Female' || search === 'female') {
+                const genderNumber = 2;
+                if (staffs = yield staff_entity_1.staff.find({ where: { gender: genderNumber } })) {
+                    return res.status(200).json({
+                        success: true,
+                        staffs
+                    });
+                }
+            }
+            if (staffs = yield staff_entity_1.staff.find({ where: { staffID: search } })) {
+                return res.status(200).json({
+                    success: true,
+                    staffs
+                });
+            }
+        }
+        if (search) {
+            staffs = staffs.filter(staff => new Date(staff.birthDay) >= new Date(search));
+            return res.status(200).json({
+                success: true,
+                staffs
+            });
+        }
+        if (search) {
+            staffs = staffs.filter(staff => new Date(staff.birthDay) <= new Date(search));
+            return res.status(200).json({
+                success: true,
+                staffs
+            });
+        }
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: 'Seaech staff from api controller',
+        });
+    }
+});
+exports.searchStaff = searchStaff;

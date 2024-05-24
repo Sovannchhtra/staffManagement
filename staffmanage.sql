@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 23, 2024 at 02:37 PM
+-- Generation Time: May 24, 2024 at 03:28 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -30,19 +30,18 @@ SET time_zone = "+00:00";
 CREATE TABLE `staff` (
   `staffID` int(11) NOT NULL,
   `fullName` varchar(255) NOT NULL,
-  `birthDay` datetime NOT NULL,
-  `gender` int(11) NOT NULL
+  `gender` int(11) NOT NULL,
+  `birthDay` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `staff`
 --
 
-INSERT INTO `staff` (`staffID`, `fullName`, `birthDay`, `gender`) VALUES
-(2, 'Chann Lika', '2024-05-22 00:00:00', 2),
-(4, 'Nai Sovannrothnak', '2024-05-22 20:29:00', 2),
-(7, 'Bunn Lika', '2024-05-22 00:00:00', 2),
-(8, 'Than Chansopheak', '2024-05-11 00:00:00', 2);
+INSERT INTO `staff` (`staffID`, `fullName`, `gender`, `birthDay`) VALUES
+(1, 'Nai Sovannchhaktra', 1, '2024-05-24'),
+(2, 'Bunn Phak', 1, '2024-05-01'),
+(3, 'Sok Lita', 2, '2004-05-20');
 
 --
 -- Indexes for dumped tables
@@ -62,7 +61,7 @@ ALTER TABLE `staff`
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `staffID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `staffID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

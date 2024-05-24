@@ -112,3 +112,58 @@ export const deleteStaff=async(req:Request,res:Response)=>{
           });
      }
 }
+
+export const searchStaff=async(req:Request,res:Response)=>{
+     try {
+          const {search} = req.body;
+          let staffs = await staff.find();
+          if(search){
+               if(search === 'Male' || search === 'male'){
+                    const genderNumber = 1;
+                    if(staffs = await staff.find({where:{gender:genderNumber}})){
+                         return res.status(200).json({
+                              success:true,
+                              staffs
+                         });
+                    }
+               }
+               if(search === 'Female' || search === 'female'){
+                    const genderNumber = 2;
+                    if(staffs = await staff.find({where:{gender:genderNumber}})){
+                         return res.status(200).json({
+                              success:true,
+                              staffs
+                         });
+                    }
+               }
+
+               if(staffs = await staff.find({where:{staffID:search}})){
+                    return res.status(200).json({
+                         success:true,
+                         staffs
+                    });
+               }
+          }
+          if(search){
+               staffs = staffs.filter(staff => new Date(staff.birthDay) >= new Date(search));
+               return res.status(200).json({
+                    success:true,
+                    staffs
+               });
+          }
+          if(search){
+               staffs = staffs.filter(staff => new Date(staff.birthDay) <= new Date(search));
+               return res.status(200).json({
+                    success:true,
+                    staffs
+               });
+          }
+          
+     } catch (error) {
+          console.log(error);
+          return res.status(500).json({
+               success:false,
+               message:'Seaech staff from api controller',
+          });
+     }
+}

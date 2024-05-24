@@ -11,4 +11,5 @@ route.post('/create', staff_controller_1.createStaff);
 route.get('/edit/:id', staff_controller_1.editStaff);
 route.post('/update/:id', staff_controller_1.updateStaff);
 route.delete('/delete/:id', staff_controller_1.deleteStaff);
+route.post('/search', staff_controller_1.searchStaff);
 exports.default = route;

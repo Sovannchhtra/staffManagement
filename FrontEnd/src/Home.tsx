@@ -18,9 +18,23 @@ function Home() {
                .then(()=> window.location.reload())
                .catch((err)=>console.log(err));
      }
-     // search
-     const [query,setQuery] = useState('');
 
+     // search
+     const [query,setQuery] = useState({
+          search:''
+     });
+     const handleSearch = async (e) => {
+          e.preventDefault();
+          await axios.post('http://localhost:8081/api/v1/search',{...query})
+          .then((res)=>{
+               setStaffs(res.data.staffs);
+          })
+          .catch((err)=>console.log(err))
+          console.log(staffs);
+     };
+     
+     
+     
      // print PDF
      const conponentPDF = useRef();
      const generatePDF=useReactToPrint({
@@ -31,10 +45,12 @@ function Home() {
 
      return (
           <div className='container'>
+
                <div className='d-flex mt-5 justify-content-between'>
                     <Link to="/create" className="btn btn-success">+ Add</Link>
-                    <form className='d-flex gap-2 w-50'>
-                         <input onChange={(e)=> setQuery(e.target.value)} type="search" placeholder='Search'  className='form-control w-100'/>
+                    <form className='d-flex gap-2 w-50' onSubmit={handleSearch}>
+                         <input onChange={(e)=> setQuery({...query,search:e.target.value})} type="search" placeholder='Search'  className='form-control w-100'/>
+                         <button type='submit' className='btn btn-primary'>Search</button>
                     </form>
                </div>
                <div ref={conponentPDF}>
@@ -50,9 +66,8 @@ function Home() {
                </thead>
                <tbody>
                     {
-                        staffs.filter(staff=>staff.fullName.toLowerCase().includes(query))
-                        .map((staff,i)=>
-                        <tr key={i}>
+                         staffs.map((staff,i)=>
+                         <tr key={i}>
                               <th>{staff.staffID}</th>
                               <td>{staff.fullName}</td>
                               <td>{staff.gender == '1' ? 'Male' : 'Female'}</td>
@@ -61,7 +76,8 @@ function Home() {
                                    <Link to={`/update/${staff.staffID}`} className='btn btn-info'>Edit</Link>
                                    <button className='btn btn-danger mx-2' onClick={()=>handleDelete(staff.staffID)}>Delete</button>
                               </td>
-                         </tr>) 
+                         </tr>)
+                         
                     }
                     
                </tbody>

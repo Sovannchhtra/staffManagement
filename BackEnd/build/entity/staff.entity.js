@@ -23,8 +23,8 @@ __decorate([
     __metadata("design:type", String)
 ], staff.prototype, "fullName", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Date)
+    (0, typeorm_1.Column)({ type: 'date' }),
+    __metadata("design:type", String)
 ], staff.prototype, "birthDay", void 0);
 __decorate([
     (0, typeorm_1.Column)(),

@@ -11,6 +11,7 @@
      - Search
 
 1: Back End using NodeJs + typescript
+
      + The CL configuration for app
           - npm init
           - npx tsc --init
@@ -24,6 +25,7 @@
           - npm start (run file index.js)
 
 2: Fornt End using ReacJS + Vite
+
      + The CL configuration for app
           - npm create vite@latest (select react)
           - npm install axios bootstrap react-router-dom

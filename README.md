@@ -24,7 +24,7 @@
           - npm run dev (run file index.ts)
           - npm start (run file index.js)
 
-2: Fornt End using ReacJS + Vite
+2: Front End using ReacJS + Vite
 
      + The CL configuration for app
           - npm create vite@latest (select react)

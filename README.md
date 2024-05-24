@@ -19,6 +19,9 @@
           - npm install mysql2 typeorm
 
      + NodeJS uses BackEnd to build web api
+     + Run server 
+          - npm run dev (run file index.ts)
+          - npm start (run file index.js)
 
 2: Fornt End using ReacJS + Vite
      + The CL configuration for app
@@ -27,3 +30,5 @@
           - npm install react-to-print
 
      + ReactJs uses FrontEnd to work with BackEnd and to display UI
+     + Run server 
+          - npm run dev

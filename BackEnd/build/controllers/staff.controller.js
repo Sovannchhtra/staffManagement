@@ -11,67 +11,51 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchStaff = exports.deleteStaff = exports.updateStaff = exports.editStaff = exports.createStaff = exports.getStaff = void 0;
 const staff_entity_1 = require("../entity/staff.entity");
+// get all staffs
 const getStaff = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const staffs = yield staff_entity_1.staff.find();
         if (staffs) {
-            return res.status(200).json({
-                success: true,
-                message: 'get all staff successfully',
-                staffs
-            });
+            return res.status(200).json({ success: true, staffs });
         }
     }
     catch (error) {
         console.log(error);
-        return res.status(500).json({
-            success: false,
-            message: 'Error get all staff from api controller',
-        });
+        return res.status(500).json({ success: false });
     }
 });
 exports.getStaff = getStaff;
+// create staff
 const createStaff = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, gender, birthday } = req.body;
         const create = yield staff_entity_1.staff.create(Object.assign(Object.assign({}, staff_entity_1.staff), { fullName: name, gender: gender, birthDay: birthday }));
         const staffSave = yield staff_entity_1.staff.save(create);
         if (staffSave) {
-            return res.status(201).json({
-                success: false,
-                message: 'Create staff from api controller',
-            });
+            return res.status(201).json({ success: false });
         }
     }
     catch (error) {
         console.log(error);
-        return res.status(500).json({
-            success: false,
-            message: 'Error create all staff from api controller',
-        });
+        return res.status(500).json({ success: false });
     }
 });
 exports.createStaff = createStaff;
+// edit staff
 const editStaff = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const staffs = yield staff_entity_1.staff.findOne({ where: { staffID: req.params.id } });
         if (staffs) {
-            return res.status(200).json({
-                success: true,
-                message: 'Update staff successfully',
-                staffs
-            });
+            return res.status(200).json({ success: true, staffs });
         }
     }
     catch (error) {
         console.log(error);
-        return res.status(500).json({
-            success: false,
-            message: 'Error edit staff from api controller',
-        });
+        return res.status(500).json({ success: false });
     }
 });
 exports.editStaff = editStaff;
+// edit staff submit
 const updateStaff = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.id;
@@ -79,92 +63,50 @@ const updateStaff = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const findStaff = yield staff_entity_1.staff.findOne({ where: { staffID: id } });
         const updateStaff = yield (findStaff === null || findStaff === void 0 ? void 0 : findStaff.save(findStaff.fullName = name, findStaff.gender = gender, findStaff.birthDay = birthday));
         if (updateStaff) {
-            return res.status(200).json({
-                success: true,
-                message: 'Update staff successfully'
-            });
+            return res.status(200).json({ success: true });
         }
     }
     catch (error) {
         console.log(error);
-        return res.status(500).json({
-            success: false,
-            message: 'Error edit all staff from api controller',
-        });
+        return res.status(500).json({ success: false });
     }
 });
 exports.updateStaff = updateStaff;
+// delete staff
 const deleteStaff = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.id;
         const staffs = yield staff_entity_1.staff.findOne({ where: { staffID: id } });
         const remove = yield staff_entity_1.staff.remove(staffs);
         if (remove) {
-            return res.status(200).json({
-                success: true,
-                message: 'Delete staff successfully',
-            });
+            return res.status(200).json({ success: true });
         }
     }
     catch (error) {
         console.log(error);
-        return res.status(500).json({
-            success: false,
-            message: 'Delete staff from api controller',
-        });
+        return res.status(500).json({ success: false });
     }
 });
 exports.deleteStaff = deleteStaff;
+// search staff
 const searchStaff = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { search } = req.body;
+        const { staffId, gender, fromBirthday, toBirthday } = req.body;
         let staffs = yield staff_entity_1.staff.find();
-        if (search) {
-            if (search === 'Male' || search === 'male') {
-                const genderNumber = 1;
-                if (staffs = yield staff_entity_1.staff.find({ where: { gender: genderNumber } })) {
-                    return res.status(200).json({
-                        success: true,
-                        staffs
-                    });
-                }
-            }
-            if (search === 'Female' || search === 'female') {
-                const genderNumber = 2;
-                if (staffs = yield staff_entity_1.staff.find({ where: { gender: genderNumber } })) {
-                    return res.status(200).json({
-                        success: true,
-                        staffs
-                    });
-                }
-            }
-            if (staffs = yield staff_entity_1.staff.find({ where: { staffID: search } })) {
-                return res.status(200).json({
-                    success: true,
-                    staffs
-                });
-            }
-        }
-        if (search) {
-            staffs = staffs.filter(staff => new Date(staff.birthDay) >= new Date(search));
-            return res.status(200).json({
-                success: true,
-                staffs
-            });
-        }
-        if (search) {
-            staffs = staffs.filter(staff => new Date(staff.birthDay) <= new Date(search));
-            return res.status(200).json({
-                success: true,
-                staffs
-            });
-        }
+        if (staffId)
+            staffs = staffs.filter(staff => staff.staffID == staffId);
+        if (gender)
+            staffs = staffs.filter(staff => staff.gender == gender);
+        if (fromBirthday)
+            staffs = staffs.filter(staff => new Date(staff.birthDay) >= new Date(fromBirthday));
+        if (toBirthday)
+            staffs = staffs.filter(staff => new Date(staff.birthDay) <= new Date(toBirthday));
+        return res.status(200).json({ staffs });
     }
     catch (error) {
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: 'Seaech staff from api controller',
         });
     }
 });

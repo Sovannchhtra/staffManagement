@@ -6,6 +6,7 @@ import Create from './Create'
 import './Nav'
 import Nav from './Nav';
 import Update from './Update';
+import Search from './Search';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/create' element={<Create/>}/>
         <Route path='/update/:id' element={<Update/>}/>
+        <Route path='/search' element={<Search/>}/>
       </Routes>
     </BrowserRouter>
   );
